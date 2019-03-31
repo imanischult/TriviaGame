@@ -1,10 +1,17 @@
+/* Still working on CSS things */
+
 body{
     background-image: url(../images/Atlanta.jpg);
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-position-y: -20px;
     text-align: center;
-    background-color: black;
+    background-color: #eeeeee;
+}
+
+.jumbotron {
+    background: #777777;
+    color: white;
 }
 
 .text-muted{
@@ -18,5 +25,5 @@ body{
 }
 
 h1 {
-    background: black;
+    background: #eeeeee;
 }
