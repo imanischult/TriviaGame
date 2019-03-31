@@ -7,7 +7,10 @@ $(document).ready(function(){
     
   })
   
+    // *****  MAIN GAME LOGIC ***** //
 
+
+    //Create local variables to hold game stats
   var trivia = {
 
     correct: 0,
@@ -47,9 +50,10 @@ $(document).ready(function(){
       q7: 'I-285 and I-75'
     },
     
-    // *****  MAIN GAME LOGIC ***** //
+  
     
-    // method to initialize game
+    // ************* This function lays out the game logic *************
+
     startGame: function(){
       // restarting game results
       trivia.currentSet = 0;
@@ -58,21 +62,22 @@ $(document).ready(function(){
       trivia.unanswered = 0;
       clearInterval(trivia.timerId);
       
-      // show game section
+      // Show the game section
       $('#game').show();
       
-      //  empty last results
+      //  Emptys last results
       $('#results').html('');
       
-      // show timer
+      // Shows the timer
       $('#timer').text(trivia.timer);
       
-      // remove start button
+      // Removes start button
       $('#start').hide();
-  
+        
+      // Displays remaining time
       $('#remaining-time').show();
       
-      // ask first question
+      // Asks questions
       trivia.nextQuestion();
       
     },
@@ -112,14 +117,14 @@ $(document).ready(function(){
             $('#timer').addClass('last-seconds');
           }
       }
-      // the time has run out and increment unanswered, run result
-      else if(trivia.timer === -1){
-        trivia.unanswered++;
-        trivia.result = false;
-        clearInterval(trivia.timerId);
-        resultId = setTimeout(trivia.guessResult, 1000);
-        $('#results').html('<h3>Out of time! The answer was '+ Object.values(trivia.answers)[trivia.currentSet] +'</h3>');
-      }
+    //   // the time has run out and increment unanswered, run result
+    //   else if(trivia.timer === -1){
+    //     trivia.unanswered++;
+    //     trivia.result = false;
+    //     clearInterval(trivia.timerId);
+    //     resultId = setTimeout(trivia.guessResult, 1000);
+    //     $('#results').html('<h3>Out of time! The answer was '+ Object.values(trivia.answers)[trivia.currentSet] +'</h3>');
+    // }
       // if all the questions have been shown end the game, show results
       else if(trivia.currentSet === Object.keys(trivia.questions).length){
         
@@ -128,7 +133,7 @@ $(document).ready(function(){
           .html('<h3>Thank you for playing!</h3>'+
           '<p>Correct: '+ trivia.correct +'</p>'+
           '<p>Incorrect: '+ trivia.incorrect +'</p>'+
-          '<p>Unaswered: '+ trivia.unanswered +'</p>'+
+        //   '<p>Unaswered: '+ trivia.unanswered +'</p>'+
           '<p>Please play again!</p>');
         
         // hide game sction
@@ -139,16 +144,16 @@ $(document).ready(function(){
       }
       
     },
-    // method to evaluate the option clicked
+    // This method checks the guessed answer
     guessChecker : function() {
       
-      // timer ID for gameResult setTimeout
+      // This is the time ID
       var resultId;
       
       // the answer to the current question being asked
       var currentAnswer = Object.values(trivia.answers)[trivia.currentSet];
       
-      // if the text of the option picked matches the answer of the current question, increment correct
+      // if the answer is currect
       if($(this).text() === currentAnswer){
         // turn button green for correct
         $(this).addClass('btn-success').removeClass('btn-info');
@@ -156,9 +161,9 @@ $(document).ready(function(){
         trivia.correct++;
         clearInterval(trivia.timerId);
         resultId = setTimeout(trivia.guessResult, 1000);
-        $('#results').html('<h3>Correct Answer!</h3>');
+        $('#results').html('<h3>That is correct!</h3>');
       }
-      // else the user picked the wrong option, increment incorrect
+      // else the user picked the wrong option, increase wrong answers
       else{
         // turn button clicked red for incorrect
         $(this).addClass('btn-danger').removeClass('btn-info');
@@ -166,7 +171,7 @@ $(document).ready(function(){
         trivia.incorrect++;
         clearInterval(trivia.timerId);
         resultId = setTimeout(trivia.guessResult, 1000);
-        $('#results').html('<h3>Better luck next time! '+ currentAnswer +'</h3>');
+        $('#results').html('<h3>Not quite! The answer was '+ currentAnswer +'</h3>');
       }
       
     },
